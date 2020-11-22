@@ -5,17 +5,15 @@
 
 stack_s* m_stack;
 
-void add_item(char* name)
-{
-    stack_push(m_stack, name);
-}
-
 void print_items()
 {
+
+    printf("============[size(%lu)]============\n", m_stack->size);
     for (int i = 0; i < m_stack->size; ++i)
     {
         printf("%d: %s\n", i, (char*)m_stack->items[i]);
     }
+    printf("+++++++++++++++++++++++++++++++++\n");
 }
 
 int main()
@@ -27,10 +25,23 @@ int main()
     printf("is_empty: %d\n", m_stack->is_empty);
     printf("is_full: %d\n", m_stack->is_full);
 
-    add_item("C");
-    add_item("C++");
-    add_item("Python");
-    add_item("C#");
+    stack_push(m_stack, "C");
+    stack_push(m_stack, "C++");
+    stack_push(m_stack, "Python");
+    stack_push(m_stack, "C#");
+
+    print_items();
+
+    stack_pop(m_stack);
+
+    print_items();
+
+    stack_pop(m_stack);
+    stack_pop(m_stack);
+
+    print_items();
+
+    stack_pop(m_stack);
 
     print_items();
 
