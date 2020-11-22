@@ -58,4 +58,5 @@ void stack_destroy(stack_s* stack)
     stack->items = NULL;
     stack->is_empty = false;
     stack->is_full = false;
+    free(stack);
 }
