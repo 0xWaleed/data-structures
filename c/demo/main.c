@@ -39,6 +39,7 @@ int main()
 
 
     stack_destroy(m_stack);
+    m_stack = NULL;
 
     return 0;
 }
