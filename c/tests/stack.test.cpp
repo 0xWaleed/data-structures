@@ -105,7 +105,8 @@ TEST_CASE("stack")
             REQUIRE(stack->is_full == false);
 
             stack_push(stack, items + 1);
-            REQUIRE(stack->is_full == false);
+            REQUIRE(stack->is_full == true);
+            REQUIRE(stack->size == 2);
 
             stack_push(stack, items + 2);
             REQUIRE(stack->is_full == true);

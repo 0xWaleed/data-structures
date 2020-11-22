@@ -24,8 +24,8 @@ void stack_push(stack_s* stack, void* item)
         return;
     }
     stack->items[stack->size] = item;
-    stack->is_full = stack->size >= stack->max_size;
     stack->size++;
+    stack->is_full = stack->size >= stack->max_size;
     stack->is_empty = false;
 }
 
