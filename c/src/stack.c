@@ -50,3 +50,12 @@ void* stack_peek(stack_s* stack)
     }
     return stack->items[--stack->size];
 }
+
+void stack_destroy(stack_s* stack)
+{
+    stack->max_size = 0;
+    stack->size = 0;
+    stack->items = NULL;
+    stack->is_empty = false;
+    stack->is_full = false;
+}

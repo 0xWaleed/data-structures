@@ -180,4 +180,18 @@ TEST_CASE("stack")
             REQUIRE(vptr == NULL);
         }
     }
+
+    SECTION("destroy")
+    {
+        SECTION("stack should be destroyed")
+        {
+            stack_s* stack = stack_create(nullptr);
+            stack_destroy(stack);
+            REQUIRE(stack->items == nullptr);
+            REQUIRE(stack->is_full == false);
+            REQUIRE(stack->is_empty == false);
+            REQUIRE(stack->size == 0);
+            REQUIRE(stack->max_size == 0);
+        }
+    }
 }

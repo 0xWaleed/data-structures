@@ -39,6 +39,8 @@ void* stack_pop(stack_s* stack);
 
 void* stack_peek(stack_s* stack);
 
+void stack_destroy(stack_s* stack);
+
 #ifdef __cplusplus
 }
 #endif
