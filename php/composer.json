@@ -1,0 +1,22 @@
+{
+    "name": "bisoon/datastructure",
+    "type": "project",
+    "authors": [
+        {
+            "name": "BISOON",
+            "email": "20063083+BISOON@users.noreply.github.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DataStructure\\": "src/"
+        }
+    },
+    "require": {},
+    "require-dev": {
+        "kahlan/kahlan": "4.*"
+    },
+    "scripts": {
+        "test": "kahlan"
+    }
+}
