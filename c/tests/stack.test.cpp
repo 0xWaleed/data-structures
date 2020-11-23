@@ -14,6 +14,7 @@ TEST_CASE("stack")
                 stack_options.max_size = 1;
                 stack_s* stack = stack_create(&stack_options);
                 REQUIRE(stack->max_size == 1);
+                stack_destroy(stack);
             }
         }
 
@@ -23,6 +24,7 @@ TEST_CASE("stack")
             {
                 stack_s* stack = stack_create(nullptr);
                 REQUIRE(stack->max_size == STACK_DEFAULT_MAX_SIZE);
+                stack_destroy(stack);
             }
         }
 
@@ -30,32 +32,36 @@ TEST_CASE("stack")
         {
             stack_s* stack = stack_create(nullptr);
             REQUIRE(stack->size == 0);
+            stack_destroy(stack);
         }
 
         SECTION("items should be allocated")
         {
             stack_s* stack = stack_create(nullptr);
             REQUIRE(stack->items != NULL);
+            stack_destroy(stack);
         }
 
         SECTION("stack should be empty")
         {
             stack_s* stack = stack_create(nullptr);
             REQUIRE(stack->is_empty == true);
+            stack_destroy(stack);
         }
 
         SECTION("stack should not be full")
         {
             stack_s* stack = stack_create(nullptr);
             REQUIRE(stack->is_full == false);
+            stack_destroy(stack);
         }
     }
 
     SECTION("push")
     {
+        stack_s* stack = stack_create(nullptr);
         SECTION("increment size each time we push and stack is no longer empty")
         {
-            stack_s* stack = stack_create(nullptr);
             int item = 0;
             stack_push(stack, &item);
             REQUIRE(stack->size == 1);
@@ -64,7 +70,6 @@ TEST_CASE("stack")
 
         SECTION("pushed item should be added")
         {
-            stack_s* stack = stack_create(nullptr);
             int item = 1;
             stack_push(stack, &item);
             REQUIRE(*(int*)stack->items[0] == 1);
@@ -72,7 +77,6 @@ TEST_CASE("stack")
 
         SECTION("able to push multiple items")
         {
-            stack_s* stack = stack_create(nullptr);
             int items[] = { 1, 2, 3 };
             stack_push(stack, items);
             stack_push(stack, items + 1);
@@ -86,51 +90,54 @@ TEST_CASE("stack")
         {
             stack_options_s options;
             options.max_size = 2;
-            stack_s* stack = stack_create(&options);
+            stack_s* stackWithOptions = stack_create(&options);
             int items[] = { 1, 2, 3 };
-            stack_push(stack, items);
-            stack_push(stack, items + 1);
-            stack_push(stack, items + 2);
-            REQUIRE(*(int*)stack->items[0] == 1);
-            REQUIRE(*(int*)stack->items[1] == 2);
+            stack_push(stackWithOptions, items);
+            stack_push(stackWithOptions, items + 1);
+            stack_push(stackWithOptions, items + 2);
+            REQUIRE(*(int*)stackWithOptions->items[0] == 1);
+            REQUIRE(*(int*)stackWithOptions->items[1] == 2);
+            stack_destroy(stackWithOptions);
         }
 
         SECTION("stack should be full when reaching its max size")
         {
             stack_options_s options;
             options.max_size = 2;
-            stack_s* stack = stack_create(&options);
+            stack_s* stackWithOptions = stack_create(&options);
             int items[] = { 1, 2, 3 };
-            stack_push(stack, items);
-            REQUIRE(stack->is_full == false);
+            stack_push(stackWithOptions, items);
+            REQUIRE(stackWithOptions->is_full == false);
 
-            stack_push(stack, items + 1);
-            REQUIRE(stack->is_full == true);
-            REQUIRE(stack->size == 2);
+            stack_push(stackWithOptions, items + 1);
+            REQUIRE(stackWithOptions->is_full == true);
+            REQUIRE(stackWithOptions->size == 2);
 
-            stack_push(stack, items + 2);
-            REQUIRE(stack->is_full == true);
+            stack_push(stackWithOptions, items + 2);
+            REQUIRE(stackWithOptions->is_full == true);
 
-            stack_pop(stack);
-            REQUIRE(stack->is_full == false);
+            stack_pop(stackWithOptions);
+            REQUIRE(stackWithOptions->is_full == false);
+            stack_destroy(stackWithOptions);
         }
+        stack_destroy(stack);
     }
 
     SECTION("pop")
     {
+        stack_s* stack = stack_create(nullptr);
         SECTION("should decrements the size by 1")
         {
-            stack_s* stack = stack_create(nullptr);
             int item = 1;
             stack_push(stack, &item);
             void* poppedItem = stack_pop(stack);
             REQUIRE(*(int*)poppedItem == 1);
             REQUIRE(stack->size == 0);
+
         }
 
         SECTION("stack should be empty when we pop all items")
         {
-            stack_s* stack = stack_create(nullptr);
             int item = 1;
             stack_push(stack, &item);
             stack_pop(stack);
@@ -139,7 +146,6 @@ TEST_CASE("stack")
 
         SECTION("should return last pushed item")
         {
-            stack_s* stack = stack_create(nullptr);
             int item1 = 1, item2 = 2;
             stack_push(stack, &item1);
             stack_push(stack, &item2);
@@ -149,24 +155,23 @@ TEST_CASE("stack")
 
         SECTION("pop an empty stack should return NULL")
         {
-            stack_s* stack = stack_create(nullptr);
             void* item = stack_pop(stack);
             REQUIRE(item == NULL);
         }
 
         SECTION("pop an empty stack do nothing")
         {
-            stack_s* stack = stack_create(nullptr);
             stack_pop(stack);
             REQUIRE(stack->size == 0);
         }
+        stack_destroy(stack);
     }
 
     SECTION("peek")
     {
+        stack_s* stack = stack_create(nullptr);
         SECTION("peek top item without removing it")
         {
-            stack_s* stack = stack_create(nullptr);
             int item = 1;
             stack_push(stack, &item);
             int v = *(int*)stack_peek(stack);
@@ -176,10 +181,10 @@ TEST_CASE("stack")
 
         SECTION("return null for empty stack")
         {
-            stack_s* stack = stack_create(nullptr);
             void* vptr = stack_peek(stack);
             REQUIRE(vptr == NULL);
         }
+        stack_destroy(stack);
     }
 
     SECTION("destroy")
