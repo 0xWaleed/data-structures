@@ -35,14 +35,15 @@ public:
     T pop();
 
 private:
+    std::unique_ptr<T[]> m_items;
+
     size_t m_maxSize;
 
     size_t m_size;
 
     bool m_isEmpty;
-    bool m_isFull;
 
-    std::unique_ptr<T[]> m_items;
+    bool m_isFull;
 };
 
 template<typename T>
