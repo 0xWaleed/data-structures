@@ -1,7 +1,7 @@
+project(${PROJECT_NAME})
 
-add_library(${PROJECT_NAME}
-            include/Stack.test.hpp
-                Stack.cpp
-            )
+add_library(${PROJECT_NAME} INTERFACE)
+target_sources(${PROJECT_NAME} INTERFACE include/Stack.hpp)
 
-target_include_directories(${PROJECT_NAME} PUBLIC include)
+target_include_directories(${PROJECT_NAME} INTERFACE include)
+
