@@ -5,8 +5,6 @@
 
 
 #include <cstdint>
-#include <any>
-#include <array>
 
 
 template<typename T = int>
@@ -95,7 +93,6 @@ void Stack<T>::push(const T& item)
         return;
     }
     this->m_isEmpty = false;
-
     this->m_items[this->m_size++] = item;
     this->m_isFull = this->size() == this->maxSize();
 }
@@ -119,7 +116,7 @@ T Stack<T>::pop()
     }
     T v = this->m_items[this->m_size-- - 1];
     this->m_isEmpty = this->size() == 0;
-    this->m_isFull = this->size() == this->maxSize();
+    this->m_isFull = false;
     return v;
 }
 
