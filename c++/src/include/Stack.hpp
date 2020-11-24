@@ -42,7 +42,7 @@ private:
     bool m_isEmpty;
     bool m_isFull;
 
-    T m_items[DEFAULT_MAX_SIZE];
+    std::unique_ptr<T[]> m_items;
 };
 
 template<typename T>
@@ -56,7 +56,8 @@ Stack<T>::Stack(uint32_t maxSize):
         m_maxSize(maxSize),
         m_size(0),
         m_isEmpty(true),
-        m_isFull(false)
+        m_isFull(false),
+        m_items(std::make_unique<T[]>(maxSize))
 {
 
 }
@@ -93,6 +94,7 @@ void Stack<T>::push(const T& item)
         return;
     }
     this->m_isEmpty = false;
+
     this->m_items[this->m_size++] = item;
     this->m_isFull = this->size() == this->maxSize();
 }
