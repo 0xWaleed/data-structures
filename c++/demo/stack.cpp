@@ -1,14 +1,15 @@
 #include <iostream>
-
 #include <Stack.hpp>
+
 int main()
 {
-    Stack<std::string> stack;
+    int maxSize = 16;
+    Stack<std::string> stack(maxSize);
 
-    stack.push("First");
-    stack.push("Second");
-    stack.push("Third");
-    stack.push("Forth");
+    for (int i = 1; i <= maxSize; ++i)
+    {
+        stack.push("Item " + std::to_string(i));
+    }
 
     std::cout << "size of stack before: " << stack.size() << std::endl;
 
