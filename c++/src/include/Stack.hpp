@@ -42,6 +42,8 @@ private:
     bool m_isEmpty;
 
     bool m_isFull;
+
+    [[nodiscard]] bool isStackFull() const;
 };
 
 template<typename T>
@@ -88,7 +90,7 @@ size_t Stack<T>::maxSize() const
 template<typename T>
 void Stack<T>::push(const T& item)
 {
-    if (this->size() >= this->maxSize())
+    if (isStackFull())
     {
         return;
     }
@@ -98,9 +100,15 @@ void Stack<T>::push(const T& item)
 }
 
 template<typename T>
+bool Stack<T>::isStackFull() const
+{
+    return size() >= maxSize();
+}
+
+template<typename T>
 T Stack<T>::peek()
 {
-    if (size() == 0)
+    if (this->size() == 0)
     {
         return T();
     }
