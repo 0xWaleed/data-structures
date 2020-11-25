@@ -1,10 +1,12 @@
 #include <iostream>
 #include <Stack.hpp>
+#include <memory>
+
 
 int main()
 {
-    int maxSize = 16;
-    Stack<std::string> stack(maxSize);
+    int maxSize = 100;
+    Stack<std::string> stack;
 
     for (int i = 1; i <= maxSize; ++i)
     {

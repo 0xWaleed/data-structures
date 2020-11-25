@@ -23,10 +23,10 @@ TEST_CASE("Stack")
             REQUIRE(s.size() == 0);
         }
 
-        SECTION("default max size should be 64")
+        SECTION("default max size should be 0")
         {
             Stack s;
-            REQUIRE(s.maxSize() == 64);
+            REQUIRE(s.maxSize() == 0);
         }
 
         SECTION("max size can be changed")
@@ -69,6 +69,16 @@ TEST_CASE("Stack")
             s.push(555);
             REQUIRE(s.peek() == 55);
             REQUIRE(s.size() == 2);
+        }
+        
+        SECTION("stack is flexible and resize")
+        {
+            Stack s;
+            for (int i = 0; i < STACK_BLOCK_SIZE + 1; ++i)
+            {
+                s.push(i);
+            }
+            REQUIRE(s.size() > STACK_BLOCK_SIZE);
         }
     }
 
@@ -157,6 +167,30 @@ TEST_CASE("Stack")
             s.push(500);
             s.pop();
             REQUIRE(s.isFull() == false);
+        }
+    }
+
+    SECTION("copy")
+    {
+        SECTION("copy constructor perform deep copy")
+        {
+            Stack s1;
+            s1.push(5);
+            Stack s2 = s1;
+            REQUIRE(s2.isEmpty() == false);
+            REQUIRE(s2.isFull() == false);
+            REQUIRE(s2.pop() == 5);
+            REQUIRE(s1.pop() == 5);
+        }
+
+        SECTION("assignment operator performs deep copy")
+        {
+            Stack s1;
+            s1.push(5);
+            Stack s2;
+            s2 = s1;
+            REQUIRE(s2.pop() == 5);
+            REQUIRE(s1.pop() == 5);
         }
     }
 }
