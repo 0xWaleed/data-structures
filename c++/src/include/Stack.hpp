@@ -51,6 +51,8 @@ private:
     size_t m_maxSize = DEFAULT_MAX_SIZE;
 
     size_t m_size;
+
+    [[nodiscard]] bool needsReAllocation() const;
 };
 
 template<typename T>
@@ -135,12 +137,18 @@ void Stack<T>::push(const T& item)
         return;
     }
 
-    if ((this->size() == 0 ? 1 : this->size()) % STACK_BLOCK_SIZE == 0)
+    if (this->needsReAllocation())
     {
         this->resizeItemsBuffer();
     }
 
     this->m_items[this->m_size++] = item;
+}
+
+template<typename T>
+bool Stack<T>::needsReAllocation() const
+{
+    return (size() == 0 ? 1 : size()) % STACK_BLOCK_SIZE == 0;
 }
 
 
@@ -169,10 +177,7 @@ T Stack<T>::pop()
 template<typename T>
 Stack<T>::~Stack()
 {
-    if (m_items != nullptr)
-    {
-        delete[] m_items;
-    }
+    delete[] m_items;
 }
 
 template<typename T>
