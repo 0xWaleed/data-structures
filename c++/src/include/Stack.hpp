@@ -45,8 +45,6 @@ public:
 private /* methods */:
     void resizeItemsBuffer();
 
-    [[nodiscard]] bool isStackFull() const; //TODO need to reconsidered
-
 private:
     T* m_items;
 
@@ -132,7 +130,7 @@ size_t Stack<T>::maxSize() const
 template<typename T>
 void Stack<T>::push(const T& item)
 {
-    if (isStackFull())
+    if (this->isFull())
     {
         return;
     }
@@ -145,16 +143,6 @@ void Stack<T>::push(const T& item)
     this->m_items[this->m_size++] = item;
 }
 
-template<typename T>
-bool Stack<T>::isStackFull() const
-{
-    if (this->maxSize() == 0)
-    {
-        return false;
-    }
-
-    return this->size() >= this->maxSize();
-}
 
 template<typename T>
 T Stack<T>::peek()
