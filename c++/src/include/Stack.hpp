@@ -53,11 +53,6 @@ private:
     size_t m_maxSize = DEFAULT_MAX_SIZE;
 
     size_t m_size;
-
-    bool m_isEmpty;
-
-    bool m_isFull;
-
 };
 
 template<typename T>
@@ -70,8 +65,6 @@ template<typename T>
 Stack<T>::Stack(uint32_t maxSize):
         m_maxSize{ maxSize },
         m_size{ 0 },
-        m_isEmpty{ true },
-        m_isFull{ false },
         m_items{ new T[STACK_BLOCK_SIZE] }
 {
 
@@ -86,8 +79,6 @@ Stack<T>::Stack(const Stack& rhs)
         m_items[i] = rhs.m_items[i];
     }
     m_size = rhs.size();
-    m_isEmpty = rhs.m_isEmpty;
-    m_isFull = rhs.m_isFull;
 }
 
 
@@ -105,8 +96,6 @@ Stack<T>& Stack<T>::operator=(const Stack& rhs)
         m_items[i] = rhs.m_items[i];
     }
     m_size = rhs.size();
-    m_isEmpty = rhs.m_isEmpty;
-    m_isFull = rhs.m_isFull;
     return *this;
 }
 
@@ -119,13 +108,13 @@ Stack<T>::Stack(Stack&& rhs)
 template<typename T>
 bool Stack<T>::isEmpty() const
 {
-    return this->m_isEmpty;
+    return this->size() == 0;
 }
 
 template<typename T>
 bool Stack<T>::isFull() const
 {
-    return this->m_isFull;
+    return this->maxSize() != 0 && this->size() >= this->maxSize();
 }
 
 template<typename T>
@@ -153,9 +142,7 @@ void Stack<T>::push(const T& item)
         this->resizeItemsBuffer();
     }
 
-    this->m_isEmpty = false;
     this->m_items[this->m_size++] = item;
-    this->m_isFull = this->isStackFull();
 }
 
 template<typename T>
@@ -188,8 +175,6 @@ T Stack<T>::pop()
     }
 
     T v = this->m_items[this->m_size-- - 1];
-    this->m_isEmpty = this->size() == 0;
-    this->m_isFull = false;
     return v;
 }
 
@@ -206,7 +191,7 @@ template<typename T>
 void Stack<T>::resizeItemsBuffer()
 {
     auto newBuffer = new T[this->size() + STACK_BLOCK_SIZE];
-    std::copy(m_items, m_items + this->size(), newBuffer);
+    std::move(m_items, m_items + this->size(), newBuffer);
     delete[] m_items;
     m_items = newBuffer;
 }
