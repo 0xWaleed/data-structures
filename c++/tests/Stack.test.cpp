@@ -193,5 +193,38 @@ TEST_CASE("Stack")
             REQUIRE(s1.pop() == 5);
         }
     }
+
+    SECTION("move")
+    {
+        SECTION("move constructor move data")
+        {
+            Stack sSource(2);
+            sSource.push(5);
+            REQUIRE(sSource.size() == 1);
+            REQUIRE(sSource.maxSize() == 2);
+            Stack sDestination = std::move(sSource);
+            REQUIRE(sSource.size() == 0);
+            REQUIRE(sDestination.size() == 1);
+            REQUIRE(sSource.maxSize() == 0);
+            REQUIRE(sDestination.maxSize() == 2);
+            REQUIRE(sDestination.pop() == 5);
+        }
+
+
+        SECTION("assignment should deal with size")
+        {
+            Stack sSource(2);
+            sSource.push(5);
+            REQUIRE(sSource.size() == 1);
+            REQUIRE(sSource.maxSize() == 2);
+            Stack sDestination;
+            sDestination = std::move(sSource);
+            REQUIRE(sSource.size() == 0);
+            REQUIRE(sDestination.size() == 1);
+            REQUIRE(sSource.maxSize() == 0);
+            REQUIRE(sDestination.maxSize() == 2);
+        }
+
+    }
 }
 

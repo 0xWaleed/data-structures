@@ -22,7 +22,9 @@ public:
 
     Stack& operator=(const Stack& rhs);
 
-    Stack(Stack&& rhs);
+    Stack(Stack&& rhs) noexcept;
+
+    Stack& operator=(Stack&& rhs) noexcept;
 
     ~Stack();
 
@@ -53,6 +55,8 @@ private:
     size_t m_size;
 
     [[nodiscard]] bool needsReAllocation() const;
+
+    [[nodiscard]] bool maxSizeApplicable() const;
 };
 
 template<typename T>
@@ -100,9 +104,38 @@ Stack<T>& Stack<T>::operator=(const Stack& rhs)
 }
 
 template<typename T>
-Stack<T>::Stack(Stack&& rhs)
+Stack<T>::Stack(Stack&& rhs) noexcept
 {
+    if (&rhs == this)
+    {
+        return;
+    }
 
+    this->m_size = rhs.size();
+    this->m_items = rhs.m_items;
+    this->m_maxSize = rhs.m_maxSize;
+    rhs.m_size = 0;
+    rhs.m_items = nullptr;
+    rhs.m_maxSize = 0;
+}
+
+template<typename T>
+Stack<T>& Stack<T>::operator=(Stack&& rhs) noexcept
+{
+    if (&rhs == this)
+    {
+        return *this;
+    }
+
+    this->m_size = rhs.size();
+    this->m_items = rhs.m_items;
+    this->m_maxSize = rhs.maxSize();
+
+    rhs.m_size = 0;
+    rhs.m_items = nullptr;
+    rhs.m_maxSize = 0;
+
+    return *this;
 }
 
 template<typename T>
@@ -114,7 +147,13 @@ bool Stack<T>::isEmpty() const
 template<typename T>
 bool Stack<T>::isFull() const
 {
-    return this->maxSize() != 0 && this->size() >= this->maxSize();
+    return this->maxSizeApplicable() && this->size() >= this->maxSize();
+}
+
+template<typename T>
+bool Stack<T>::maxSizeApplicable() const
+{
+    return maxSize() != 0;
 }
 
 template<typename T>
@@ -145,12 +184,12 @@ void Stack<T>::push(const T& item)
     this->m_items[this->m_size++] = item;
 }
 
+
 template<typename T>
 bool Stack<T>::needsReAllocation() const
 {
     return (size() == 0 ? 1 : size()) % STACK_BLOCK_SIZE == 0;
 }
-
 
 template<typename T>
 T Stack<T>::peek()
