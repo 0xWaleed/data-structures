@@ -9,8 +9,6 @@ class Stack
     private $items = [];
 
     private int $size = 0;
-    private bool $isFull = false;
-    private bool $isEmpty = true;
 
     private int $maxSize;
 
@@ -36,13 +34,11 @@ class Stack
             return;
         }
         $this->items[$this->size++] = $item;
-        $this->isEmpty = false;
-        $this->isFull = $this->size >= $this->maxSize();
     }
 
     public function isFull(): bool
     {
-        return $this->isFull;
+        return $this->size() >= $this->maxSize();
     }
 
     public function maxSize(): int
@@ -58,13 +54,11 @@ class Stack
         }
         $item = $this->items[$this->size - 1];
         unset($this->items[$this->size-- - 1]);
-        $this->isFull = $this->size >= $this->maxSize();
-        $this->isEmpty = $this->size === 0;
         return $item;
     }
 
     public function isEmpty(): bool
     {
-        return $this->isEmpty;
+        return $this->size() === 0;
     }
 }
