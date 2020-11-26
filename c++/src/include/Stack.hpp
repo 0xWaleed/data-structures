@@ -18,6 +18,8 @@ public:
 
     Stack();
 
+    explicit Stack(uint32_t maxSize);
+
     Stack(const Stack& rhs);
 
     Stack& operator=(const Stack& rhs);
@@ -27,8 +29,6 @@ public:
     Stack& operator=(Stack&& rhs) noexcept;
 
     ~Stack();
-
-    explicit Stack(uint32_t maxSize);
 
     [[nodiscard]] bool isEmpty() const;
 
@@ -47,16 +47,16 @@ public:
 private /* methods */:
     void resizeItemsBuffer();
 
+    [[nodiscard]] bool needsReAllocation() const;
+
+    [[nodiscard]] bool isMaxSizeApplicable() const;
+
 private:
     T* m_items;
 
     size_t m_maxSize = DEFAULT_MAX_SIZE;
 
     size_t m_size;
-
-    [[nodiscard]] bool needsReAllocation() const;
-
-    [[nodiscard]] bool isMaxSizeApplicable() const;
 };
 
 template<typename T>
