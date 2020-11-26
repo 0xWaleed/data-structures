@@ -6,8 +6,6 @@ class Stack
         this._maxSize = maxSize;
         this._size = 0;
         this._items = [];
-        this._isFull = false;
-        this._isEmpty = true;
     }
 
     size()
@@ -17,12 +15,12 @@ class Stack
 
     isFull()
     {
-        return this._isFull;
+        return this.size() >= this.maxSize();
     }
 
     isEmpty()
     {
-        return this._isEmpty;
+        return this.size() === 0;
     }
 
     maxSize()
@@ -36,8 +34,6 @@ class Stack
             return;
         }
         this._items[this._size++] = item;
-        this._isFull = this.size() >= this.maxSize();
-        this._isEmpty = false;
     }
 
     pop()
@@ -45,9 +41,8 @@ class Stack
         if (this.size() === 0) {
             return;
         }
-        let item = this._items[this._size-- - 1];
-        this._isFull = this.size() >= this.maxSize();
-        this._isEmpty = this.size() >= 0;
+        let item = this._items[this._size - 1];
+        delete this._items[this._size-- - 1];
         return item;
     }
 
