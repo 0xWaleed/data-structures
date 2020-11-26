@@ -77,10 +77,11 @@ Stack<T>::Stack(uint32_t maxSize):
 template<typename T>
 Stack<T>::Stack(const Stack& rhs)
 {
-    this->m_items = new T[rhs.size()];
-    std::copy(rhs.m_items, rhs.m_items + rhs.size(), this->m_items);
-    this->m_size = rhs.size();
-    this->m_size = rhs.size();
+    size_t rhsSize = rhs.size();
+    this->m_items = new T[rhsSize];
+    std::copy(rhs.m_items, rhs.m_items + rhsSize, this->m_items);
+    this->m_size = rhsSize;
+    this->m_size = rhsSize;
     this->m_maxSize = rhs.maxSize();
 }
 
@@ -93,10 +94,11 @@ Stack<T>& Stack<T>::operator=(const Stack& rhs)
         return *this;
     }
 
-    this->m_items = new T[rhs.size()];
-    std::copy(rhs.m_items, rhs.m_items + rhs.size(), this->m_items);
-    this->m_size = rhs.size();
-    this->m_size = rhs.size();
+    size_t rhsSize = rhs.size();
+    this->m_items = new T[rhsSize];
+    std::copy(rhs.m_items, rhs.m_items + rhsSize, this->m_items);
+    this->m_size = rhsSize;
+    this->m_size = rhsSize;
     this->m_maxSize = rhs.maxSize();
     return *this;
 }
@@ -111,7 +113,8 @@ Stack<T>::Stack(Stack&& rhs) noexcept
 
     this->m_size = rhs.size();
     this->m_items = rhs.m_items;
-    this->m_maxSize = rhs.m_maxSize;
+    this->m_maxSize = rhs.maxSize();
+
     rhs.m_size = 0;
     rhs.m_items = nullptr;
     rhs.m_maxSize = 0;
