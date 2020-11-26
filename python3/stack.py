@@ -24,7 +24,7 @@ class Stack:
         self.is_full = self.size >= self.max_size
         self.is_empty = self.size == 0
         item = self.__items[self.size]
-        del self.__items[self.size - 1]
+        del self.__items[self.size]
         return item
 
     def __str__(self):
