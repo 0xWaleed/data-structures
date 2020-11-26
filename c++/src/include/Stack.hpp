@@ -56,7 +56,7 @@ private:
 
     [[nodiscard]] bool needsReAllocation() const;
 
-    [[nodiscard]] bool maxSizeApplicable() const;
+    [[nodiscard]] bool isMaxSizeApplicable() const;
 };
 
 template<typename T>
@@ -77,12 +77,11 @@ Stack<T>::Stack(uint32_t maxSize):
 template<typename T>
 Stack<T>::Stack(const Stack& rhs)
 {
-    m_items = new T[rhs.size()];
-    for (int i = 0; i < rhs.size(); ++i)
-    {
-        m_items[i] = rhs.m_items[i];
-    }
-    m_size = rhs.size();
+    this->m_items = new T[rhs.size()];
+    std::copy(rhs.m_items, rhs.m_items + rhs.size(), this->m_items);
+    this->m_size = rhs.size();
+    this->m_size = rhs.size();
+    this->m_maxSize = rhs.maxSize();
 }
 
 
@@ -94,12 +93,11 @@ Stack<T>& Stack<T>::operator=(const Stack& rhs)
         return *this;
     }
 
-    m_items = new T[rhs.size()];
-    for (int i = 0; i < rhs.size(); ++i)
-    {
-        m_items[i] = rhs.m_items[i];
-    }
-    m_size = rhs.size();
+    this->m_items = new T[rhs.size()];
+    std::copy(rhs.m_items, rhs.m_items + rhs.size(), this->m_items);
+    this->m_size = rhs.size();
+    this->m_size = rhs.size();
+    this->m_maxSize = rhs.maxSize();
     return *this;
 }
 
@@ -147,11 +145,11 @@ bool Stack<T>::isEmpty() const
 template<typename T>
 bool Stack<T>::isFull() const
 {
-    return this->maxSizeApplicable() && this->size() >= this->maxSize();
+    return this->isMaxSizeApplicable() && this->size() >= this->maxSize();
 }
 
 template<typename T>
-bool Stack<T>::maxSizeApplicable() const
+bool Stack<T>::isMaxSizeApplicable() const
 {
     return maxSize() != 0;
 }

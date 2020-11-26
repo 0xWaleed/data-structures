@@ -174,23 +174,29 @@ TEST_CASE("Stack")
     {
         SECTION("copy constructor perform deep copy")
         {
-            Stack s1;
+            Stack s1(1);
             s1.push(5);
             Stack s2 = s1;
             REQUIRE(s2.isEmpty() == false);
-            REQUIRE(s2.isFull() == false);
+            REQUIRE(s2.isFull() == true);
+            REQUIRE(s1.size() == 1);
             REQUIRE(s2.pop() == 5);
             REQUIRE(s1.pop() == 5);
+            REQUIRE(s1.maxSize() == 1);
         }
 
         SECTION("assignment operator performs deep copy")
         {
-            Stack s1;
+            Stack s1(1);
             s1.push(5);
             Stack s2;
             s2 = s1;
+            REQUIRE(s2.isEmpty() == false);
+            REQUIRE(s2.isFull() == true);
+            REQUIRE(s1.size() == 1);
             REQUIRE(s2.pop() == 5);
             REQUIRE(s1.pop() == 5);
+            REQUIRE(s1.maxSize() == 1);
         }
     }
 
