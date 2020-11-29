@@ -18,8 +18,7 @@ int main()
     }
 
     l.deleteNodeByValue(3);
-
-    std::cout << "------" << std::endl;
+    l.deleteNodeByValue(4);
 
     values = l.head()->traverse();
     for (auto& v: values)

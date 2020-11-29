@@ -22,15 +22,26 @@ public:
 
     void deleteNodeByValue(T value);
 
+private /* methods */:
+    void assignNodeToHead(T item);
+
 private:
     std::unique_ptr<SinglyNode<T>> m_head;
-    size_t m_size;
+    SinglyNode<T>* m_tail;
+
+    size_t m_size{};
 };
 
 template<typename T>
 size_t LinkedList<T>::size() const
 {
-    return m_size;
+    return this->m_size;
+}
+
+template<typename T>
+SinglyNode<T>* LinkedList<T>::head()
+{
+    return this->m_head.get();
 }
 
 template<typename T>
@@ -38,30 +49,32 @@ void LinkedList<T>::insert(T item)
 {
     if (!this->m_head)
     {
-        this->m_head = std::make_unique<SinglyNode<T>>();
-        this->m_head->value = item;
-        this->m_size++;
+        assignNodeToHead(item);
         return;
     }
+
     auto node = std::make_unique<SinglyNode<T>>();
     node->value = item;
-    auto temp = this->m_head.get();
-    while (temp)
-    {
-        if (temp->next == nullptr)
-        {
-            temp->next = std::move(node);
-            break;
-        }
-        temp = temp->next.get();
-    }
+    this->m_tail->next = std::move(node);
+    this->m_tail = this->m_tail->next.get();
     this->m_size++;
 }
 
 template<typename T>
-SinglyNode<T>* LinkedList<T>::head()
+void LinkedList<T>::insertAtBeginning(T item)
 {
-    return this->m_head.get();
+    if (this->m_head == nullptr)
+    {
+        assignNodeToHead(item);
+        return;
+    }
+
+    auto node = std::make_unique<SinglyNode<T>>();
+    node->value = item;
+
+    node->next = std::move(this->m_head);
+    this->m_head = std::move(node);
+    this->m_size++;
 }
 
 template<typename T>
@@ -81,33 +94,12 @@ SinglyNode<T>* LinkedList<T>::find(T value)
 }
 
 template<typename T>
-void LinkedList<T>::insertAtBeginning(T item)
-{
-    if (this->m_head == nullptr)
-    {
-        auto node = std::make_unique<SinglyNode<T>>();
-        node->value = item;
-        this->m_head = std::move(node);
-        this->m_size++;
-        return;
-    }
-
-    auto node = std::make_unique<SinglyNode<T>>();
-    node->value = item;
-
-    node->next = std::move(this->m_head);
-    this->m_head = std::move(node);
-    this->m_size++;
-}
-
-template<typename T>
 void LinkedList<T>::deleteNodeByValue(T value)
 {
-    int i = 0;
-
     auto n = this->head();
     SinglyNode<T>* prev = nullptr;
     SinglyNode<T>* next = nullptr;
+
     while (n)
     {
         if (n->value == value)
@@ -115,20 +107,32 @@ void LinkedList<T>::deleteNodeByValue(T value)
             if (prev != nullptr)
             {
                 prev->next = std::move(n->next);
+                this->m_size--;
                 break;
             }
 
             if (n->next != nullptr)
             {
-                m_head = std::move(n->next);
+                this->m_head = std::move(n->next);
+                this->m_size--;
                 break;
             }
 
+            this->m_size--;
             break;
         }
         prev = n;
         n = n->next.get();
     }
+}
+
+template<typename T>
+void LinkedList<T>::assignNodeToHead(T item)
+{
+    m_head = std::make_unique<SinglyNode<T>>();
+    m_head->value = item;
+    m_tail = m_head.get();
+    m_size++;
 }
 
 

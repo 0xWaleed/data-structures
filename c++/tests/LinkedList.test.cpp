@@ -5,9 +5,9 @@ TEST_CASE("LinkedList")
 {
     SECTION("initialize")
     {
+        LinkedList l;
         SECTION("size should be zero")
         {
-            LinkedList l;
             REQUIRE(l.size() == 0);
         }
     }
@@ -145,6 +145,28 @@ TEST_CASE("LinkedList")
                     5, 6, 7
             };
             REQUIRE_THAT(l.head()->traverse(), Catch::Matchers::Equals(expected));
+        }
+
+        SECTION("try to delete item that is not exist")
+        {
+            l.deleteNodeByValue(100);
+            auto expected = std::vector<int>{
+                    5, 6, 7, 8
+            };
+            REQUIRE_THAT(l.head()->traverse(), Catch::Matchers::Equals(expected));
+        }
+
+        SECTION("should decrements the size")
+        {
+            REQUIRE(l.size() == 4);
+            l.deleteNodeByValue(5);
+            REQUIRE(l.size() == 3);
+            l.deleteNodeByValue(6);
+            REQUIRE(l.size() == 2);
+            l.deleteNodeByValue(7);
+            REQUIRE(l.size() == 1);
+            l.deleteNodeByValue(8);
+            REQUIRE(l.size() == 0);
         }
     }
 }
