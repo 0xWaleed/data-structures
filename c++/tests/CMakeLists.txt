@@ -11,7 +11,9 @@ FetchContent_MakeAvailable(Catch2)
 
 add_executable(${PROJECT_NAME}
                main.cpp
-               Stack.test.cpp)
+               Stack.test.cpp
+               SinglyNode.test.cpp
+               LinkedList.test.cpp)
 
 target_link_libraries(${PROJECT_NAME} Catch2::Catch2)
 target_link_libraries(${PROJECT_NAME} ${CMAKE_PROJECT_NAME})
