@@ -75,6 +75,13 @@ Stack<T>::Stack(uint32_t maxSize):
 }
 
 template<typename T>
+Stack<T>::~Stack()
+{
+    delete[] m_items;
+}
+
+
+template<typename T>
 Stack<T>::Stack(const Stack& rhs)
 {
     size_t rhsSize = rhs.size();
@@ -84,7 +91,6 @@ Stack<T>::Stack(const Stack& rhs)
     this->m_size = rhsSize;
     this->m_maxSize = rhs.maxSize();
 }
-
 
 template<typename T>
 Stack<T>& Stack<T>::operator=(const Stack& rhs)
@@ -169,6 +175,7 @@ size_t Stack<T>::maxSize() const
     return this->m_maxSize;
 }
 
+
 template<typename T>
 void Stack<T>::push(const T& item)
 {
@@ -184,7 +191,6 @@ void Stack<T>::push(const T& item)
 
     this->m_items[this->m_size++] = item;
 }
-
 
 template<typename T>
 bool Stack<T>::needsReAllocation() const
@@ -212,12 +218,6 @@ T Stack<T>::pop()
 
     T v = this->m_items[this->m_size-- - 1];
     return v;
-}
-
-template<typename T>
-Stack<T>::~Stack()
-{
-    delete[] m_items;
 }
 
 template<typename T>

@@ -24,12 +24,13 @@ public:
 
 private:
     std::unique_ptr<SinglyNode<T>> m_head;
+    size_t m_size;
 };
 
 template<typename T>
 size_t LinkedList<T>::size() const
 {
-    return 0;
+    return m_size;
 }
 
 template<typename T>
@@ -37,8 +38,9 @@ void LinkedList<T>::insert(T item)
 {
     if (!this->m_head)
     {
-        m_head = std::make_unique<SinglyNode<T>>();
-        m_head->value = item;
+        this->m_head = std::make_unique<SinglyNode<T>>();
+        this->m_head->value = item;
+        this->m_size++;
         return;
     }
     auto node = std::make_unique<SinglyNode<T>>();
@@ -53,12 +55,13 @@ void LinkedList<T>::insert(T item)
         }
         temp = temp->next.get();
     }
+    this->m_size++;
 }
 
 template<typename T>
 SinglyNode<T>* LinkedList<T>::head()
 {
-    return m_head.get();
+    return this->m_head.get();
 }
 
 template<typename T>
@@ -80,18 +83,21 @@ SinglyNode<T>* LinkedList<T>::find(T value)
 template<typename T>
 void LinkedList<T>::insertAtBeginning(T item)
 {
-    if (m_head == nullptr)
+    if (this->m_head == nullptr)
     {
         auto node = std::make_unique<SinglyNode<T>>();
         node->value = item;
         this->m_head = std::move(node);
+        this->m_size++;
+        return;
     }
 
     auto node = std::make_unique<SinglyNode<T>>();
     node->value = item;
 
-    node->next = std::move(m_head);
-    m_head = std::move(node);
+    node->next = std::move(this->m_head);
+    this->m_head = std::move(node);
+    this->m_size++;
 }
 
 template<typename T>

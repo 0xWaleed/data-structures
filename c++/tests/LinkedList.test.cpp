@@ -36,6 +36,18 @@ TEST_CASE("LinkedList")
                 auto values = l.head()->traverse();
                 REQUIRE_THAT(values, Catch::Matchers::Equals(expected));
             }
+
+            SECTION("size should be incremented")
+            {
+                LinkedList l;
+                REQUIRE(l.size() == 0);
+                l.insert(5);
+                REQUIRE(l.size() == 1);
+                l.insert(5);
+                REQUIRE(l.size() == 2);
+                l.insert(5);
+                REQUIRE(l.size() == 3);
+            }
         }
 
         SECTION("insert at the beginning")
@@ -51,13 +63,27 @@ TEST_CASE("LinkedList")
             SECTION("head should become second when it points to a node")
             {
                 LinkedList l;
-                l.insert(5);
+                l.insertAtBeginning(5);
                 l.insertAtBeginning(6);
                 REQUIRE(l.head() != nullptr);
                 const std::vector<int>& expected = std::vector<int>{ 6, 5 };
                 REQUIRE_THAT(l.head()->traverse(), Catch::Matchers::Equals(expected));
             }
+
+            SECTION("size should be incremented")
+            {
+                LinkedList l;
+                REQUIRE(l.size() == 0);
+                l.insertAtBeginning(1);
+                REQUIRE(l.size() == 1);
+                l.insertAtBeginning(1);
+                REQUIRE(l.size() == 2);
+                l.insertAtBeginning(1);
+                REQUIRE(l.size() == 3);
+            }
         }
+
+
     }
 
     SECTION("find")
