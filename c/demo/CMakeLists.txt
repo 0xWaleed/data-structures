@@ -1,7 +1,9 @@
 project(${PROJECT_NAME}_demo)
 
-add_executable(${PROJECT_NAME}
-               main.c
-               )
+list(APPEND _PROJECTS stack linklist)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_PROJECT_NAME})
+
+foreach (project ${_PROJECTS})
+    add_executable(${PROJECT_NAME}_${project} ${project}.c)
+    target_link_libraries(${PROJECT_NAME}_${project} PRIVATE ${CMAKE_PROJECT_NAME})
+endforeach ()
