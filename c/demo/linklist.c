@@ -4,7 +4,7 @@
 
 void printItems(const clist_s* list);
 
-bool findHello(void* value)
+bool worldPredicate(void* value)
 {
     return !strcmp(value, "World");
 }
@@ -27,7 +27,7 @@ int main()
 
     printItems(list);
 
-    printf("found: %s\n", (char*)linklist_find(linklist, findHello)->value);
+    printf("found: %s\n", (char*)linklist_find(linklist, worldPredicate)->value);
 
     linklist_remove(linklist, helloPredicate);
 
