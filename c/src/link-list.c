@@ -12,6 +12,7 @@ void linklist_add(linklist_s* linklist, void* value)
 {
     linklist_node_s* node = calloc(1, sizeof(linklist_node_s));
     node->value = value;
+    linklist->size++;
     if (linklist->head == NULL)
     {
         linklist->head = node;
@@ -70,12 +71,14 @@ void linklist_remove(linklist_s* linklist, predicate_t predicate)
             {
                 linklist->head = node->next;
                 free(node);
+                linklist->size--;
                 break;
             }
             if (left)
             {
                 left->next = node->next;
                 free(node);
+                linklist->size--;
                 break;
             }
         }
