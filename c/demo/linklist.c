@@ -24,6 +24,8 @@ int main()
     }
 
     printf("found %s\n", (char*)linklist_find(linklist, findHello)->value);
+    clist_destroy(&list);
+    linklist_destroy(&linklist);
     return 0;
 }
 

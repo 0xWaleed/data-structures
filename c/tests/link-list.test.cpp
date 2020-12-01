@@ -5,7 +5,7 @@
 
 TEST_CASE("link-list")
 {
-    SECTION("initialize")
+    SECTION("create")
     {
         linklist_s* l = linklist_create();
         SECTION("size should be 0")
@@ -22,13 +22,12 @@ TEST_CASE("link-list")
         {
             REQUIRE(l->tail == nullptr);
         }
+        linklist_destroy(&l);
     }
 
     SECTION("add")
     {
         linklist_s* l = linklist_create();
-
-
 
         SECTION("first element should be added to head and tail")
         {
@@ -89,11 +88,14 @@ TEST_CASE("link-list")
             linklist_add(l, &value);
             REQUIRE(l->head->next == nullptr);
         }
+
+        linklist_destroy(&l);
     }
 
     SECTION("traverse")
     {
         linklist_s* l = linklist_create();
+        clist_s* list = clist_create(16);
         SECTION("list that has multiple nodes")
         {
             int values[] = {
@@ -104,7 +106,6 @@ TEST_CASE("link-list")
             linklist_add(l, &values[2]);
             linklist_add(l, &values[3]);
             linklist_add(l, &values[4]);
-            clist_s* list = clist_create(16);
             linklist_traverse(l->head, list);
 
             REQUIRE(list->size == 5);
@@ -117,10 +118,11 @@ TEST_CASE("link-list")
 
         SECTION("empty list")
         {
-            clist_s* list = clist_create(16);
             linklist_traverse(l->head, list);
             REQUIRE(list->size == 0);
         }
+        linklist_destroy(&l);
+        clist_destroy(&list);
     }
 
     SECTION("find")
@@ -150,6 +152,7 @@ TEST_CASE("link-list")
 
             REQUIRE(node == nullptr);
         }
+        linklist_destroy(&linklist);
     }
 
     SECTION("remove")
@@ -193,6 +196,21 @@ TEST_CASE("link-list")
             REQUIRE(*reinterpret_cast<int*>(clist->values[0]) == 2);
             REQUIRE(*reinterpret_cast<int*>(clist->values[1]) == 4);
         }
+        clist_destroy(&clist);
+        linklist_destroy(&linklist);
+    }
+    
+    SECTION("destroy")
+    {
+        linklist_s* linklist = linklist_create();
+        int value = 0;
+        linklist_add(linklist, &value);
+        linklist_add(linklist, &value);
+        linklist_add(linklist, &value);
+        linklist_destroy(&linklist);
+        REQUIRE(linklist->head == nullptr);
+        REQUIRE(linklist->tail == nullptr);
+        REQUIRE(linklist->size == 0);
     }
 }
 

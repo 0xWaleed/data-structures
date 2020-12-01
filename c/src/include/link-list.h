@@ -41,6 +41,8 @@ linklist_node_s* linklist_find(linklist_s* linklist, predicate_t predicate);
 
 void linklist_remove(linklist_s* linklist, predicate_t predicate);
 
+void linklist_destroy(linklist_s** linklist);
+
 #ifdef __cplusplus
 }
 #endif

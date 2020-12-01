@@ -69,15 +69,37 @@ void linklist_remove(linklist_s* linklist, predicate_t predicate)
             if (!left)
             {
                 linklist->head = node->next;
+                free(node);
                 break;
             }
             if (left)
             {
                 left->next = node->next;
+                free(node);
                 break;
             }
         }
         left = node;
         node = node->next;
     }
+}
+
+void internal_recursive_free(linklist_node_s* node)
+{
+    if (node == NULL)
+    {
+        return;
+    }
+    internal_recursive_free(node->next);
+    free(node);
+}
+
+void linklist_destroy(linklist_s** linklist)
+{
+    linklist_s* l = *linklist;
+    internal_recursive_free(l->head);
+    l->head = NULL;
+    l->tail = NULL;
+    l->size = 0;
+    free(l);
 }
