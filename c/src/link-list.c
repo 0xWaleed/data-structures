@@ -40,7 +40,7 @@ void linklist_traverse(linklist_node_s* node, clist_s* list)
     linklist_traverse(node->next, list);
 }
 
-linklist_node_s* linklist_find(linklist_s* linklist, bool(* predicate)(void* value))
+linklist_node_s* linklist_find(linklist_s* linklist, predicate_t predicate)
 {
     linklist_node_s* node = linklist->head;
 
