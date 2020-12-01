@@ -70,17 +70,15 @@ void linklist_remove(linklist_s* linklist, predicate_t predicate)
             if (!left)
             {
                 linklist->head = node->next;
-                free(node);
-                linklist->size--;
-                break;
             }
-            if (left)
+            else
             {
                 left->next = node->next;
-                free(node);
-                linklist->size--;
-                break;
             }
+
+            free(node);
+            linklist->size--;
+            break;
         }
         left = node;
         node = node->next;
