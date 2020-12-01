@@ -152,9 +152,47 @@ TEST_CASE("link-list")
         }
     }
 
-    SECTION("delete")
+    SECTION("remove")
     {
+        linklist_s* linklist = linklist_create();
+        clist_s* clist = clist_create(8);
+        int values[] = { 2, 4, 6 };
+        linklist_add(linklist, &values[0]);
+        linklist_add(linklist, &values[1]);
+        linklist_add(linklist, &values[2]);
 
+        SECTION("delete first node")
+        {
+            linklist_remove(linklist, [](void* value)-> bool {
+                return *reinterpret_cast<int*>(value) == 2;
+            });
+            linklist_traverse(linklist->head, clist);
+            REQUIRE(clist->size == 2);
+            REQUIRE(*reinterpret_cast<int*>(clist->values[0]) == 4);
+            REQUIRE(*reinterpret_cast<int*>(clist->values[1]) == 6);
+        }
+
+        SECTION("delete middle node")
+        {
+            linklist_remove(linklist, [](void* value)-> bool {
+                return *reinterpret_cast<int*>(value) == 4;
+            });
+            linklist_traverse(linklist->head, clist);
+            REQUIRE(clist->size == 2);
+            REQUIRE(*reinterpret_cast<int*>(clist->values[0]) == 2);
+            REQUIRE(*reinterpret_cast<int*>(clist->values[1]) == 6);
+        }
+
+        SECTION("delete last node")
+        {
+            linklist_remove(linklist, [](void* value)-> bool {
+                return *reinterpret_cast<int*>(value) == 6;
+            });
+            linklist_traverse(linklist->head, clist);
+            REQUIRE(clist->size == 2);
+            REQUIRE(*reinterpret_cast<int*>(clist->values[0]) == 2);
+            REQUIRE(*reinterpret_cast<int*>(clist->values[1]) == 4);
+        }
     }
 }
 

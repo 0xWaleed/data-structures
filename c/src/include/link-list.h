@@ -9,6 +9,8 @@
 
 typedef struct linklist_node linklist_node_s;
 
+typedef bool(* predicate_t)(void* value);
+
 struct linklist_node
 {
     void* value;
@@ -35,7 +37,9 @@ void linklist_add(linklist_s* linklist, void* value);
 
 void linklist_traverse(linklist_node_s* node, clist_s* list);
 
-linklist_node_s* linklist_find(linklist_s* linklist, bool(* predicate)(void* value));
+linklist_node_s* linklist_find(linklist_s* linklist, predicate_t predicate);
+
+void linklist_remove(linklist_s* linklist, predicate_t predicate);
 
 #ifdef __cplusplus
 }

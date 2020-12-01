@@ -56,3 +56,28 @@ linklist_node_s* linklist_find(linklist_s* linklist, bool(* predicate)(void* val
 
     return NULL;
 }
+
+void linklist_remove(linklist_s* linklist, predicate_t predicate)
+{
+    linklist_node_s* node = linklist->head;
+    linklist_node_s* left = NULL;
+
+    while (node)
+    {
+        if (predicate(node->value))
+        {
+            if (!left)
+            {
+                linklist->head = node->next;
+                break;
+            }
+            if (left)
+            {
+                left->next = node->next;
+                break;
+            }
+        }
+        left = node;
+        node = node->next;
+    }
+}
