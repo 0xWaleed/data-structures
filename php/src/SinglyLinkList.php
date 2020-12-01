@@ -66,4 +66,21 @@ class SinglyLinkList
     {
         return $this->head;
     }
+
+    public function find($value): ?SinglyLinkListNode
+    {
+        $node = $this->head();
+
+        while ($node)
+        {
+            if ($value == $node->value)
+            {
+                return $node;
+            }
+
+            $node = $node->next;
+        }
+
+        return null;
+    }
 }

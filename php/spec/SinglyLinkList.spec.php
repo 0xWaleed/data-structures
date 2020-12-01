@@ -8,6 +8,7 @@ describe('Singly Link List', function ()
     describe('initialize', Closure::fromCallable('initialize_tests'));
     describe('add', Closure::fromCallable('add_tests'));
     describe('remove', Closure::fromCallable('remove_tests'));
+    describe('find', Closure::fromCallable('find_tests'));
 });
 
 function initialize_tests()
@@ -182,5 +183,34 @@ function remove_tests()
         $instance->remove(2);
         expect($instance->size())->toBe(0);
 
+    });
+}
+
+function find_tests()
+{
+    beforeEach(function ()
+    {
+        $node = new SinglyLinkList();
+        $node->add(2);
+        $node->add(4);
+        $node->add(6);
+        $this->instance = $node;
+
+    });
+
+    it('expects to return the node of given value', function ()
+    {
+        /** @var SinglyLinkList $instance */
+        $instance = $this->instance;
+
+        expect($instance->find(2)->value)->toEqual(2);
+    });
+
+    it('expects to return null for value that not existent', function ()
+    {
+        /** @var SinglyLinkList $instance */
+        $instance = $this->instance;
+
+        expect($instance->find(100))->toBeNull();
     });
 }
