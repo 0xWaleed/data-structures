@@ -31,14 +31,13 @@ int main()
 
     linklist_remove(linklist, helloPredicate);
 
-    clist_s* listAfterRemove = clist_create(8);
+    clist_clear(list);
 
-    linklist_traverse(linklist->head, listAfterRemove);
+    linklist_traverse(linklist->head, list);
 
-    printItems(listAfterRemove);
+    printItems(list);
 
     clist_destroy(&list);
-    clist_destroy(&listAfterRemove);
     linklist_destroy(&linklist);
     return 0;
 }
