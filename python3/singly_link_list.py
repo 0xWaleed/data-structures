@@ -35,3 +35,12 @@ class SinglyLinkList:
 
             left = node
             node = node.next
+
+    def find(self, value):
+        node = self.head
+
+        while node is not None:
+            if value == node.value:
+                return node
+
+            node = node.next

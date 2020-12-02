@@ -94,5 +94,19 @@ class TestSinglyLinkList(unittest.TestCase):
         node.remove(1)
         self.assertEqual(0, node.size)
 
+    def test_able_to_find_a_node_by_value(self):
+        node = SinglyLinkList()
+        node.add(5)
+        node.add(3)
+        node.add(1)
+        _node = node.find(3)
+        self.assertEqual(3, _node.value)
+
+    def test_return_none_when_node_not_exist(self):
+        node = SinglyLinkList()
+        _node = node.find(3)
+        self.assertIsNone(_node)
+
+
 if __name__ == '__main__':
     unittest.main()
