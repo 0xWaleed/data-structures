@@ -20,3 +20,18 @@ class SinglyLinkList:
 
         self.tail.next = node
         self.tail = node
+
+    def remove(self, value):
+        node: SinglyLinkListNode = self.head
+        left: SinglyLinkListNode = None
+        self.__size -= 1
+        while node is not None:
+
+            if value == node.value:
+                if left is None:
+                    self.head = node.next
+                else:
+                    left.next = node.next
+
+            left = node
+            node = node.next

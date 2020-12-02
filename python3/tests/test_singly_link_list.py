@@ -58,6 +58,41 @@ class TestSinglyLinkList(unittest.TestCase):
         node.add(1)
         self.assertEqual(3, node.size)
 
+    def test_remove_first_node(self):
+        node = SinglyLinkList()
+        node.add(5)
+        node.add(3)
+        node.add(1)
+        node.remove(5)
+        self.assertEqual([3, 1], node.head.traverse())
+
+    def test_remove_middle_node(self):
+        node = SinglyLinkList()
+        node.add(5)
+        node.add(3)
+        node.add(1)
+        node.remove(3)
+        self.assertEqual([5, 1], node.head.traverse())
+
+    def test_remove_last_node(self):
+        node = SinglyLinkList()
+        node.add(5)
+        node.add(3)
+        node.add(1)
+        node.remove(1)
+        self.assertEqual([5, 3], node.head.traverse())
+
+    def test_size_should_be_decremented_when_removing(self):
+        node = SinglyLinkList()
+        node.add(5)
+        node.add(3)
+        node.add(1)
+        node.remove(5)
+        self.assertEqual(2, node.size)
+        node.remove(3)
+        self.assertEqual(1, node.size)
+        node.remove(1)
+        self.assertEqual(0, node.size)
 
 if __name__ == '__main__':
     unittest.main()
