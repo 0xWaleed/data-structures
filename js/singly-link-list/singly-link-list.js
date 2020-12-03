@@ -41,4 +41,19 @@ class SinglyLinkList
             node = node.next;
         }
     }
+
+    find(value)
+    {
+        let node = this.head;
+
+        while (node) {
+
+            if (value === node.value) {
+                return node;
+            }
+            node = node.next;
+        }
+
+        return null;
+    }
 }

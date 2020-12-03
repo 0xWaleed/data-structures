@@ -123,4 +123,26 @@ describe('SinglyLinkList', () =>
             expect(s.size).to.equals(0);
         });
     });
+
+    describe('find', () =>
+    {
+        let s;
+        beforeEach(() =>
+        {
+            s = new SinglyLinkList();
+            s.add(2);
+            s.add(4);
+            s.add(6);
+        });
+
+        it('expects to return the node of the existent value', async () =>
+        {
+            expect(s.find(2).value).to.equals(2);
+        });
+
+        it('expects to return null for non existent value', async () =>
+        {
+            expect(s.find(100)).to.be.null;
+        });
+    });
 });
