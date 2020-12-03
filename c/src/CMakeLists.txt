@@ -16,6 +16,8 @@ list(APPEND _SOURCES
      stack.c
      include/link-list.h
      link-list.c
+     include/queue.h
+     queue.c
      )
 
 add_library(${PROJECT_NAME} ${_SOURCES})

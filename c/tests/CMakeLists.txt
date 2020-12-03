@@ -14,6 +14,7 @@ add_executable(${PROJECT_NAME}
                main.cpp
                stack.test.cpp
                link-list.test.cpp
+               queue.test.cpp
                )
 
 target_link_libraries(${PROJECT_NAME} ${CMAKE_PROJECT_NAME})
