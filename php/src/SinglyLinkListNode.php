@@ -31,9 +31,4 @@ class SinglyLinkListNode
 
         return $arr;
     }
-
-    public function remove(mixed $value)
-    {
-
-    }
 }
