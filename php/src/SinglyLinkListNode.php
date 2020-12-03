@@ -6,7 +6,7 @@ namespace DataStructure;
 
 class SinglyLinkListNode
 {
-    public function __construct(public $value = null, public ?SinglyLinkListNode $next = null)
+    public function __construct(public mixed $value = null, public ?SinglyLinkListNode $next = null)
     {
     }
 
