@@ -6,6 +6,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <clist.h>
+#include "common.h"
 
 typedef struct linklist_node linklist_node_s;
 
@@ -27,9 +28,7 @@ struct linklist
 };
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_DECL
 
 linklist_s* linklist_create();
 
@@ -43,8 +42,6 @@ void linklist_remove(linklist_s* linklist, predicate_t predicate);
 
 void linklist_destroy(linklist_s** linklist);
 
-#ifdef __cplusplus
-}
-#endif
+END_DECL
 
 #endif //LINK_LIST_H

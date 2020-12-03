@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
-
+#include "common.h"
 #define STACK_DEFAULT_MAX_SIZE 64
 
 typedef struct stack stack_s;
@@ -26,10 +26,7 @@ struct stack_options
     size_t max_size;
 };
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_DECL
 
 stack_s* stack_create(stack_options_s* options);
 
@@ -41,8 +38,6 @@ void* stack_peek(stack_s* stack);
 
 void stack_destroy(stack_s* stack);
 
-#ifdef __cplusplus
-}
-#endif
+END_DECL
 
 #endif //STACK_H
