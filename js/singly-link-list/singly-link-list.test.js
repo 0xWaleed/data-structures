@@ -90,6 +90,37 @@ describe('SinglyLinkList', () =>
         beforeEach(() =>
         {
             s = new SinglyLinkList();
+            s.add(2);
+            s.add(4);
+            s.add(6);
+        });
+
+        it('should able to remove from the start', async () =>
+        {
+            s.remove(2)
+            expect(s.head.traverse()).to.deep.equals([4, 6]);
+        });
+
+        it('should able to remove from the middle', async () =>
+        {
+            s.remove(4)
+            expect(s.head.traverse()).to.deep.equals([2, 6]);
+        });
+
+        it('should able to remove from the end', async () =>
+        {
+            s.remove(6)
+            expect(s.head.traverse()).to.deep.equals([2, 4]);
+        });
+
+        it('should decrement the size', async () =>
+        {
+            s.remove(2);
+            expect(s.size).to.equals(2);
+            s.remove(4);
+            expect(s.size).to.equals(1);
+            s.remove(6);
+            expect(s.size).to.equals(0);
         });
     });
 });

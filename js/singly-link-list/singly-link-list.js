@@ -19,4 +19,26 @@ class SinglyLinkList
         this.tail.next = node;
         this.tail = node;
     }
+
+    remove(value)
+    {
+        let node = this.head;
+        let left;
+        while (node) {
+
+            if (value === node.value) {
+                if (!left) {
+                    this.head = node.next;
+                }
+                else {
+                    left.next = node.next;
+                }
+                this.size--;
+                break;
+            }
+
+            left = node;
+            node = node.next;
+        }
+    }
 }
