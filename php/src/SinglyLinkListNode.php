@@ -6,18 +6,8 @@ namespace DataStructure;
 
 class SinglyLinkListNode
 {
-    public ?SinglyLinkListNode $next = null;
-    public $value;
-
-    /**
-     * SinglyLinkListNode constructor.
-     * @param SinglyLinkListNode|null $next
-     * @param $value
-     */
-    public function __construct($value = null, ?SinglyLinkListNode $next = null)
+    public function __construct(public $value = null, public ?SinglyLinkListNode $next = null)
     {
-        $this->next = $next;
-        $this->value = $value;
     }
 
     public function traverse(): array
@@ -42,7 +32,7 @@ class SinglyLinkListNode
         return $arr;
     }
 
-    public function remove($value)
+    public function remove(mixed $value)
     {
 
     }

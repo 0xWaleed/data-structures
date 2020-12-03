@@ -12,7 +12,9 @@
             "DataStructure\\": "src/"
         }
     },
-    "require": {},
+    "require": {
+        "php": "8.0"
+    },
     "require-dev": {
         "kahlan/kahlan": "4.*"
     },

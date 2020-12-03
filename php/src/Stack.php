@@ -5,16 +5,13 @@ namespace DataStructure;
 class Stack
 {
 
-    /** @var mixed */
-    private $items = [];
+    private mixed $items = [];
 
     private int $size = 0;
 
-    private int $maxSize;
 
-    public function __construct(int $maxSize = 64)
+    public function __construct(public int $maxSize = 64)
     {
-        $this->maxSize = $maxSize;
     }
 
     public function size(): int
@@ -27,7 +24,7 @@ class Stack
         return $this->items[$this->size - 1];
     }
 
-    public function push($item)
+    public function push(mixed $item)
     {
         if ($this->isFull())
         {
@@ -46,7 +43,7 @@ class Stack
         return $this->maxSize;
     }
 
-    public function pop()
+    public function pop(): mixed
     {
         if ($this->isEmpty())
         {
