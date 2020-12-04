@@ -12,6 +12,7 @@ describe('Queue', function ()
     describe('initialize', Closure::fromCallable('queue_initialize_tests'));
     describe('enqueue', Closure::fromCallable('queue_enqueue_tests'));
     describe('dequeue', Closure::fromCallable('queue_dequeue_tests'));
+    describe('peek', Closure::fromCallable('queue_peek_tests'));
 });
 
 
@@ -94,7 +95,7 @@ function queue_dequeue_tests()
         expect($instance->dequeue())->toBe(2);
     });
 
-    it('should remove the value', function ()
+    it('should remove the value and decrement the size', function ()
     {
         /** @var Queue $instance */
         $instance = $this->instance;
@@ -109,5 +110,31 @@ function queue_dequeue_tests()
         expect($instance->dequeue())->toBe(2);
         expect($instance->dequeue())->toBe(4);
         expect($instance->dequeue())->toBe(6);
+    });
+
+    it('returns null when queue is empty', function ()
+    {
+        $queue = new Queue(2);
+        expect($queue->dequeue())->toBe(null);
+        expect($queue->size())->toBe(0);
+    });
+}
+
+function queue_peek_tests()
+{
+    it('expects to return first added element without removing it', function ()
+    {
+        /** @var Queue $instance */
+        $instance = $this->instance;
+        $instance->enqueue(20);
+        expect($instance->peek())->toBe(20);
+        expect($instance->size())->toBe(1);
+    });
+
+    it('returns null when there is no value', function ()
+    {
+        /** @var Queue $instance */
+        $instance = $this->instance;
+        expect($instance->peek())->toBe(null);
     });
 }

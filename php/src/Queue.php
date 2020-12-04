@@ -28,14 +28,23 @@ class Queue
         return $this->size;
     }
 
-    public function peek()
-    {
-        return 5;
-    }
-
-    public function dequeue()
+    public function peek(): mixed
     {
         $currentIndex = array_key_first($this->values);
+        if ($currentIndex === null)
+        {
+            return null;
+        }
+        return $this->values[$currentIndex];
+    }
+
+    public function dequeue(): mixed
+    {
+        $currentIndex = array_key_first($this->values);
+        if ($currentIndex === null)
+        {
+            return null;
+        }
         $value = $this->values[$currentIndex];
         unset($this->values[$currentIndex]);
         $this->size--;
