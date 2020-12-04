@@ -1,27 +1,42 @@
-#include <printf.h>
 #include "include/queue.h"
 
-queue_s* queue_create()
+queue_s* queue_create(size_t capacity)
 {
     queue_s* queue = malloc(sizeof(queue_s));
     queue->size = 0;
     queue->values = NULL;
+    queue->capacity = capacity;
     return queue;
 }
 
-void queue_enqueue(queue_s* queue, void* value)
+bool queue_enqueue(queue_s* queue, void* value)
 {
-    if (queue->values == NULL || queue->size % QUEUE_BLOCK_SIZE == 0)
+    if (queue->size >= queue->capacity)
     {
-        size_t size = sizeof(NULL) * QUEUE_BLOCK_SIZE;
-        void** newSpace = malloc(size);
-        for (int i = 0; i < queue->size; ++i)
-        {
-            newSpace[i] = queue->values[i];
-        }
-        free(queue->values);
-        queue->values = newSpace;
+        return false;
+    }
+
+    if (queue->values == NULL)
+    {
+        queue->values = malloc(queue->capacity * sizeof(NULL));
     }
 
     queue->values[queue->size++] = value;
+    return true;
+}
+
+void* queue_dequeue(queue_s* queue)
+{
+    void* value = queue->values[0];
+    for (int i = 0; i < queue->size - 1; ++i)
+    {
+        queue->values[i] = queue->values[i + 1];
+    }
+    queue->size--;
+    return value;
+}
+
+void* queue_peek(queue_s* queue)
+{
+    return queue->values[0];
 }
