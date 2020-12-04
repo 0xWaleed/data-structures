@@ -40,3 +40,16 @@ void* queue_peek(queue_s* queue)
 {
     return queue->values[0];
 }
+
+void queue_destroy(queue_s** queue)
+{
+    if (queue == NULL)
+    {
+        return;
+    }
+    queue_s* q = *queue;
+    free(q->values);
+    q->values = NULL;
+    free(q);
+    *queue = NULL;
+}

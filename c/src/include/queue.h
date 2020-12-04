@@ -24,6 +24,8 @@ void* queue_dequeue(queue_s* queue);
 
 void* queue_peek(queue_s* queue);
 
+void queue_destroy(queue_s** queue);
+
 END_DECL
 
 #endif //QUEUE_H

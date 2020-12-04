@@ -20,6 +20,7 @@ TEST_CASE("queue")
         {
             REQUIRE(q->capacity == 5);
         }
+        queue_destroy(&q);
     }
 
     SECTION("enqueue")
@@ -79,6 +80,7 @@ TEST_CASE("queue")
             REQUIRE(queue_enqueue(q, &value) == true);
             REQUIRE(q->size == 3);
         }
+        queue_destroy(&q);
     }
 
     SECTION("peek")
@@ -106,6 +108,7 @@ TEST_CASE("queue")
             r = queue_peek(q);
             REQUIRE(*reinterpret_cast<int*>(r) == 6);
         }
+        queue_destroy(&q);
     }
 
     SECTION("dequeue")
@@ -134,6 +137,32 @@ TEST_CASE("queue")
             REQUIRE(q->size == 1);
             queue_dequeue(q);
             REQUIRE(q->size == 0);
+        }
+        queue_destroy(&q);
+    }
+
+    SECTION("destroy")
+    {
+        SECTION("created queue")
+        {
+            queue_s* q = queue_create(5);
+            queue_destroy(&q);
+            REQUIRE(q == NULL);
+        }
+
+        SECTION("with nullptr")
+        {
+            queue_destroy(nullptr);
+            SUCCEED();
+        }
+
+        SECTION("destroying values pointer")
+        {
+            queue_s* q = queue_create(5);
+            queue_enqueue(q, (void*)"Hel");
+            queue_s* ptrCopy = q;
+            queue_destroy(&q);
+            REQUIRE(ptrCopy->values == NULL);
         }
     }
 }
