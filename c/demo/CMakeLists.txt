@@ -1,6 +1,6 @@
 project(${PROJECT_NAME}_demo)
 
-list(APPEND _PROJECTS stack linklist)
+list(APPEND _PROJECTS stack linklist queue)
 
 
 foreach (project ${_PROJECTS})
