@@ -17,6 +17,8 @@ public:
 
     T dequeue();
 
+    T peek();
+
 private:
     size_t m_capacity;
 
@@ -60,6 +62,10 @@ bool Queue<T>::enqueue(T item)
 template<typename T>
 T Queue<T>::dequeue()
 {
+    if (this->size() == 0)
+    {
+        return T();
+    }
     T value = this->m_items[0];
     for (int i = 0; i < this->size() - 1; ++i)
     {
@@ -67,6 +73,12 @@ T Queue<T>::dequeue()
     }
     this->m_size--;
     return value;
+}
+
+template<typename T>
+T Queue<T>::peek()
+{
+    return this->m_items[0];
 }
 
 #endif //QUEUE_HPP

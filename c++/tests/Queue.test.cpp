@@ -43,6 +43,7 @@ TEST_CASE("Queue")
             q.enqueue(5);
             q.enqueue(5);
             REQUIRE(q.enqueue(2) == false);
+            REQUIRE(q.size() == 3);
         }
 
         SECTION("able to add to full queue after removing an item")
@@ -78,11 +79,37 @@ TEST_CASE("Queue")
             q.dequeue();
             REQUIRE(q.size() == 0);
         }
+
+        SECTION("return default value when queue empty")
+        {
+            Queue<int> queue(3);
+            REQUIRE(queue.dequeue() == 0);
+        }
+
+        SECTION("size should not decremented when queue empty")
+        {
+            Queue<int> queue(3);
+            queue.dequeue();
+            REQUIRE(queue.size() == 0);
+        }
     }
 
     SECTION("peek")
     {
+        Queue<int> q(3);
+        q.enqueue(1);
+        q.enqueue(2);
 
+        SECTION("should return first added item without removing it")
+        {
+            REQUIRE(q.peek() == 1);
+            REQUIRE(q.size() == 2);
+        }
+
+        SECTION("should return default value when the queue is empty")
+        {
+            REQUIRE(Queue<int>(1).peek() == 0);
+        }
     }
 }
 
