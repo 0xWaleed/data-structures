@@ -3,6 +3,9 @@
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 
+#include <cctype>
+#include <utility>
+
 template<typename T>
 class Queue
 {
