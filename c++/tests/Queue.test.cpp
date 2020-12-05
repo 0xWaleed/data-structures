@@ -135,5 +135,37 @@ TEST_CASE("Queue")
             REQUIRE(q.size() == 1);
         }
     }
+
+    SECTION("move semantic")
+    {
+        SECTION("constructor")
+        {
+            Queue<int> q(5);
+            q.enqueue(2);
+            Queue<int> qCopy = std::move(q);
+            REQUIRE(qCopy.size() == 1);
+            qCopy.enqueue(3);
+            q.~Queue();
+            REQUIRE(qCopy.size() == 2);
+            REQUIRE(qCopy.dequeue() == 2);
+            REQUIRE(qCopy.dequeue() == 3);
+            SUCCEED();
+        }
+
+        SECTION("operator")
+        {
+            Queue<int> q(5);
+            q.enqueue(2);
+            Queue<int> qCopy(1);
+            qCopy = std::move(q);
+            REQUIRE(qCopy.size() == 1);
+            qCopy.enqueue(3);
+            q.~Queue();
+            REQUIRE(qCopy.size() == 2);
+            REQUIRE(qCopy.dequeue() == 2);
+            REQUIRE(qCopy.dequeue() == 3);
+            SUCCEED();
+        }
+    }
 }
 

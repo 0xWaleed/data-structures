@@ -11,7 +11,11 @@ public:
 
     Queue(const Queue& rhs);
 
-    Queue<T>& operator=(const Queue& rhs);
+    Queue<T>& operator=(const Queue<T>& rhs);
+
+    Queue(Queue&& rhs) noexcept;
+
+    Queue<T>& operator=(Queue<T>&& rhs) noexcept;
 
     ~Queue();
 
@@ -69,6 +73,29 @@ Queue<T>& Queue<T>::operator=(const Queue<T>& rhs)
     {
         this->m_items[i] = rhs.m_items[i];
     }
+    return *this;
+}
+
+template<typename T>
+Queue<T>::Queue(Queue<T>&& rhs) noexcept
+{
+    this->m_items = std::move(rhs.m_items);
+    this->m_size = rhs.size();
+    this->m_capacity = rhs.capacity();
+    rhs.m_capacity = 0;
+    rhs.m_size = 0;
+    rhs.m_items = nullptr;
+}
+
+template<typename T>
+Queue<T>& Queue<T>::operator=(Queue<T>&& rhs) noexcept
+{
+    this->m_items = std::move(rhs.m_items);
+    this->m_size = rhs.size();
+    this->m_capacity = rhs.capacity();
+    rhs.m_capacity = 0;
+    rhs.m_size = 0;
+    rhs.m_items = nullptr;
     return *this;
 }
 
