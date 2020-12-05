@@ -111,5 +111,29 @@ TEST_CASE("Queue")
             REQUIRE(Queue<int>(1).peek() == 0);
         }
     }
+
+    SECTION("copy semantic")
+    {
+        SECTION("constructor")
+        {
+            Queue<int> q(5);
+            Queue<int> qCopy = q;
+            q.enqueue(2);
+            REQUIRE(qCopy.size() == 0);
+            qCopy.dequeue();
+            REQUIRE(q.size() == 1);
+        }
+
+        SECTION("operator")
+        {
+            Queue<int> q(5);
+            Queue<int> qCopy(5);
+            qCopy = q;
+            q.enqueue(2);
+            REQUIRE(qCopy.size() == 0);
+            qCopy.dequeue();
+            REQUIRE(q.size() == 1);
+        }
+    }
 }
 

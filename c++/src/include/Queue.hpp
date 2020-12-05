@@ -9,6 +9,12 @@ class Queue
 public:
     explicit Queue(size_t capacity);
 
+    Queue(const Queue& rhs);
+
+    Queue<T>& operator=(const Queue& rhs);
+
+    ~Queue();
+
     [[nodiscard]] size_t size() const;
 
     [[nodiscard]] size_t capacity() const;
@@ -34,6 +40,42 @@ Queue<T>::Queue(size_t capacity):
         m_items(new T[capacity])
 {
 
+}
+
+template<typename T>
+Queue<T>::Queue(const Queue<T>& rhs)
+{
+    this->m_size = rhs.size();
+    this->m_capacity = rhs.capacity();
+    this->m_items = new T[this->m_capacity];
+    for (int i = 0; i < this->size(); ++i)
+    {
+        this->m_items[i] = rhs.m_items[i];
+    }
+}
+
+template<typename T>
+Queue<T>& Queue<T>::operator=(const Queue<T>& rhs)
+{
+    if (this == &rhs)
+    {
+        return *this;
+    }
+
+    this->m_size = rhs.size();
+    this->m_capacity = rhs.capacity();
+    this->m_items = new T[this->m_capacity];
+    for (int i = 0; i < this->size(); ++i)
+    {
+        this->m_items[i] = rhs.m_items[i];
+    }
+    return *this;
+}
+
+template<typename T>
+Queue<T>::~Queue()
+{
+    delete[] m_items;
 }
 
 template<typename T>
