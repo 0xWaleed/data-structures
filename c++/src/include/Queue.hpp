@@ -3,7 +3,7 @@
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 
-#include <cctype>
+#include <cstdint>
 #include <utility>
 
 template<typename T>

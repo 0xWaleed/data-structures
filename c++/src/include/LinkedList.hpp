@@ -3,7 +3,8 @@
 #ifndef LINKEDLIST_HPP
 #define LINKEDLIST_HPP
 
-#include <cctype>
+#include <cstdint>
+#include <utility>
 #include "SinglyNode.hpp"
 
 template<typename T = int>
