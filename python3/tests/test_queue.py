@@ -56,8 +56,18 @@ class TestQueue(unittest.TestCase):
         queue.dequeue()
         self.assertEqual(0, queue.size)
 
-    def test_dequeue_return_none_when_queue_is_empty(self):
+    def test_dequeue_returns_none_when_queue_is_empty(self):
         self.assertIsNone(Queue(3).dequeue())
+
+    def test_peek_returns_first_added_value_without_removing_it(self):
+        queue = Queue(3)
+        queue.enqueue(5)
+        queue.enqueue(4)
+        self.assertEqual(5, queue.peek())
+        self.assertEqual(2, queue.size)
+
+    def test_peek_returns_none_when_queue_is_empty(self):
+        self.assertIsNone(Queue(3).peek())
 
 
 if __name__ == '__main__':

@@ -23,3 +23,8 @@ class Queue:
         del self.__items[0]
         self.__size -= 1
         return item
+
+    def peek(self) -> object:
+        if self.size < 1:
+            return None
+        return self.__items[0]
