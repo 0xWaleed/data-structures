@@ -1,7 +1,7 @@
 
 
 #include <stack.h>
-#include <printf.h>
+#include <stdio.h>
 
 stack_s* m_stack;
 
