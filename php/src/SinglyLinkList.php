@@ -6,7 +6,6 @@ namespace DataStructure;
 
 class SinglyLinkList
 {
-
     private ?SinglyLinkListNode $head = null;
     private ?SinglyLinkListNode $tail = null;
     private int $size = 0;
