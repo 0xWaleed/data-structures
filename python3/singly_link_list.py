@@ -38,7 +38,6 @@ class SinglyLinkList:
 
     def find(self, value):
         node = self.head
-
         while node is not None:
             if value == node.value:
                 return node
