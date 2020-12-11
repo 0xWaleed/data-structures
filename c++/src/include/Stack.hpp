@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <utility>
+#include <memory>
 
 #define STACK_BLOCK_SIZE 8
 

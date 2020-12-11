@@ -5,6 +5,7 @@
 
 #include <cstdint>
 #include <utility>
+#include <memory>
 
 template<typename T>
 class Queue

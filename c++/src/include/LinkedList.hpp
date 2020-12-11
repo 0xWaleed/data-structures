@@ -5,6 +5,7 @@
 
 #include <cstdint>
 #include <utility>
+#include <memory>
 #include "SinglyNode.hpp"
 
 template<typename T = int>
