@@ -16,24 +16,26 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8'
-          tools: composer
 
-      - name: Validate Composer files
-        working-directory: ${{runner.workspace}}/php
-        run: composer validate
+      - name: PHP version and composer
+        run: |
+          php --version
+          composer --version
 
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v2
         with:
-          path: ${{runner.workspace}}/php/vendor
+          path: php/vendor
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
 
       - name: Install dependencies
+        working-directory: php
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run Tests
+        working-directory: php
         run: composer test
