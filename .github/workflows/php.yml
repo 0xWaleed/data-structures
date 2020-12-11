@@ -12,6 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8'
+          tools: composer
+
       - name: Validate Composer files
         working-directory: ${{runner.workspace}}/php
         run: composer validate
