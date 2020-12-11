@@ -150,6 +150,9 @@ T Queue<T>::dequeue()
 template<typename T>
 T Queue<T>::peek()
 {
+    if (this->size() == 0) {
+        return T();
+    }
     return this->m_items[0];
 }
 
