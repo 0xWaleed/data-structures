@@ -4,7 +4,6 @@ namespace DataStructure;
 
 class Stack
 {
-
     private mixed $items = [];
 
     private int $size = 0;
