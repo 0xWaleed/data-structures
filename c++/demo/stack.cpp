@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Stack.hpp>
 #include <memory>
+#include <string>
 
 
 int main()
