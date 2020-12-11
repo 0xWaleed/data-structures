@@ -1,0 +1,36 @@
+name: C++
+
+on:
+  push:
+    paths:
+      - 'c\+\+/**'
+
+jobs:
+
+  main:
+    runs-on: ${{matrix.os}}
+    continue-on-error: true
+    strategy:
+      matrix:
+        os: [ windows-latest, ubuntu-latest, macOS-latest ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Build Environment
+        run: cmake -E make_directory "${{runner.workspace}}/c++-build"
+
+      - name: Configure CMake
+        shell: bash
+        working-directory: "${{runner.workspace}}/c++-build"
+        run: cmake "$GITHUB_WORKSPACE/c++" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+      - name: Build
+        working-directory: "${{runner.workspace}}/c++-build"
+        shell: bash
+        run: cmake --build . --config $BUILD_TYPE
+
+      - name: Test
+        working-directory: "${{runner.workspace}}/c++-build"
+        shell: bash
+        run: ctest --output-on-failure -C $BUILD_TYPE
